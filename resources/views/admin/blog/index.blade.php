@@ -1,0 +1,55 @@
+@extends('layouts.admin.app')
+@section('content')
+
+<section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-11">
+                    <h5 class="card-title">Blogs</h5>
+                    </div>
+                    <div class="col-1">
+                    <a href="{{route('blogs.create')}}" class="btn btn-outline-primary btn-sm mt-3">Add</a>
+                    </div>
+                </div>
+             
+
+              <!-- Table with stripped rows -->
+              <table class="table table-striped datatable">
+                <thead>
+                  <tr>
+                    <th>
+                      Sr No.
+                    </th>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                 @foreach($blogs as $blogKey => $blog)
+                  <tr>
+                    <td>{{$blogKey+1}}</td>
+                    <td>@if($blog->image)<img src="{{asset('all_image/'.$blog->image)}}" height="50" width="50" alt="">@else - @endif</td>
+                    <td>{{$blog->title}}</td>
+                    <td>{{ substr($blog->content, 0, 50) }}...</td>
+                    <td>@if($blog->status == 1) <a onclick="return confirm('Are you sure to In Active?')" href="{{route('blogs.status',$blog->id)}}" class="btn btn-outline-success btn-sm">Active</a> @else <a onclick="return confirm('Are you sure to  Active?')" href="{{route('blogs.status',$blog->id)}}" class="btn btn-outline-danger btn-sm">In Active</a> @endif </td>
+                    <td><a href="{{route('blogs.edit',$blog->id)}}" class="bi bi-pencil-square btn btn-outline-success btn-sm" ></a> <a href="{{route('blogs.delete',$blog->id)}}" class="btn btn-sm btn-outline-danger bi bi-trash-fill" onclick="return confirm('Are you sure?')"></a></td>
+                  </tr>
+                 @endforeach
+                </tbody>
+              </table>
+              <!-- End Table with stripped rows -->
+
+            </div>
+          </div>
+
+        </div>
+      </div>    
+    </section>
+@endsection
